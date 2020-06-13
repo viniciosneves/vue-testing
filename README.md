@@ -1,29 +1,26 @@
 # testing
 
-## Project setup
+## Setup do Projeto
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Ambiente de Desenvolvimento
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+#### Configurando a api Fake
+
+Instalar o json-server globalmente:
+
 ```
-npm run build
+npm install -g json-server
 ```
 
-### Run your unit tests
+Iniciando a api fake de leilões;
+
 ```
-npm run test:unit
+json-server --watch db.json
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

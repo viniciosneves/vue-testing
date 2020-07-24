@@ -23,6 +23,12 @@
       "descricao": "Um livro com um conteúdo muito interessante sobre VueJS",
       "lanceInicial": "500",
       "id": 4
+    },
+    {
+      "produto": "Boina Italiana",
+      "descricao": "Um belo chapéu clássico",
+      "lanceInicial": "3",
+      "id": 5
     }
   ],
   "lances": [
@@ -43,6 +49,12 @@
       "data": "2020-06-13T18:19:44.871Z",
       "leilao_id": 1,
       "id": 3
+    },
+    {
+      "valor": 500,
+      "data": "2020-07-24T14:40:33.951Z",
+      "leilao_id": 4,
+      "id": 4
     }
   ]
 }

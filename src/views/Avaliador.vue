@@ -2,8 +2,8 @@
   <div class="container">
     <h1 class="m-3">Leilões em aberto</h1>
     <div class="row">
-      <div class="col-4" v-for="leilao in leiloes" :key="leilao.id">
-        <div class="card mb-4 box-shadow">
+      <div class="col-4 leiloes" v-for="leilao in leiloes" :key="leilao.id">
+        <div class="leilao card mb-4 box-shadow">
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">{{ leilao.produto }}</h4>
           </div>
@@ -21,18 +21,15 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { getLeiloes } from '@/http'
 export default {
   data () {
     return {
       leiloes: []
     }
   },
-  mounted () {
-    axios.get('http://localhost:3000/leiloes')
-      .then(response => {
-        this.leiloes = response.data
-      })
+  async mounted () {
+    this.leiloes = await getLeiloes()
   }
 }
 </script>

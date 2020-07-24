@@ -10,6 +10,11 @@
 
 <script>
 export default {
-  props: ['leilao']
+  props: {
+    leilao: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>

@@ -18,8 +18,8 @@ const leiloes = [
   }
 ]
 
-describe('Avaliador', () => {
-  test('deveria listar dois leilões retornados pela api', async () => {
+describe('Um Avaliador, que conseguiu conectar com a API', () => {
+  test('mostra todos os leilões retornados pela API', async () => {
     getLeiloes.mockResolvedValueOnce(leiloes)
     const wrapper = mount(Avaliador, {
       stubs: {
@@ -29,9 +29,10 @@ describe('Avaliador', () => {
     await flushPromises()
     expect(getLeiloes).toHaveBeenCalled()
     const totalLeiloes = wrapper.findAll('.leilao').length
-    expect(totalLeiloes).toBe(2)
+    expect(totalLeiloes).toBe(leiloes.length)
   })
-  test('não deveria listar leilões, caso o retorno seja um array vazio', async () => {
+
+  test('não há leilões abertos nesse momento', async () => {
     getLeiloes.mockResolvedValueOnce([])
     const wrapper = mount(Avaliador, {
       stubs: {

@@ -1,8 +1,17 @@
 import Lance from '@/components/Lance'
 import { mount } from '@vue/test-utils'
 
-describe('Lance', () => {
-  test('deveria dar o primeiro lance maior do que 0', () => {
+describe('Um Lance sem valor mínimo', () => {
+  test('não aceita lance com valor menor do que 0', () => {
+    const wrapper = mount(Lance)
+    const input = wrapper.find('input')
+    input.setValue(-100)
+    wrapper.trigger('submit')
+    const lancesEmitidos = wrapper.emitted('novo-lance')
+    expect(lancesEmitidos).toBeUndefined()
+  })
+
+  test('emite um lance quando o valor é maior do que 0', () => {
     const wrapper = mount(Lance)
     const input = wrapper.find('input')
     input.setValue(100)
@@ -12,8 +21,10 @@ describe('Lance', () => {
     const lance = parseInt(wrapper.emitted('novo-lance')[0][0])
     expect(lance).toBe(100)
   })
+})
 
-  test('deveria dar lance menor do que o lance mínimo esperado', async () => {
+describe('Um Lance com valor mínimo', () => {
+  test('todos os lances devem possuir um valor maior do que o do mínimo informado', async () => {
     const wrapper = mount(Lance, {
       propsData: {
         lanceMinimo: 300
@@ -28,7 +39,8 @@ describe('Lance', () => {
     const lance = parseInt(wrapper.emitted('novo-lance')[0][0])
     expect(lance).toBe(400)
   })
-  test('não deveria dar lance menor do que o lance mínimo esperado', async () => {
+
+  test('não são aceitos lances menores do que o valor mínimo', async () => {
     const wrapper = mount(Lance, {
       propsData: {
         lanceMinimo: 300

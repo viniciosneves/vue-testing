@@ -32,8 +32,8 @@ const lances = [
   }
 ]
 
-describe('Leiloeiro', () => {
-  test('não deveria exibir lances e deveria avisar que eles não existem', async () => {
+describe('Leiloeiro inicia um leilão que ainda não possui lances', () => {
+  test('avisa quando não existem lances', async () => {
     getLeilao.mockResolvedValueOnce(leilao)
     getLances.mockResolvedValueOnce([])
     const wrapper = mount(Leiloeiro, {
@@ -43,24 +43,23 @@ describe('Leiloeiro', () => {
     })
     await flushPromises()
     expect(wrapper.find('.alert-dark').exists()).toBe(true)
-    expect(wrapper.find('.lances').exists()).toBe(false)
   })
-  test('deveria criar novo lance', async () => {
+
+  test('não exibe lances para um leilão novo', async () => {
     getLeilao.mockResolvedValueOnce(leilao)
     getLances.mockResolvedValueOnce([])
-    createLance.mockResolvedValueOnce(1)
     const wrapper = mount(Leiloeiro, {
       propsData: {
         id: 1
       }
     })
     await flushPromises()
-    wrapper.find({ ref: 'novoLance' }).vm.$emit('novo-lance', 900)
-    await wrapper.vm.$nextTick()
-    await flushPromises()
-    expect(createLance).toHaveBeenCalled()
+    expect(wrapper.find('.lances').exists()).toBe(false)
   })
-  test('deveria exibir menor e maior lance', async () => {
+})
+
+describe('Um leiloeiro comunica os valores de menor e maior lance', () => {
+  test('informa o menor e maior lance do leilão', async () => {
     getLeilao.mockResolvedValueOnce(leilao)
     getLances.mockResolvedValueOnce(lances)
     const wrapper = mount(Leiloeiro, {
@@ -76,5 +75,23 @@ describe('Leiloeiro', () => {
       .toContain('Menor lance: R$ 1001')
     expect(wrapper.find('.maior-lance').element.textContent)
       .toContain('Maior lance: R$ 1099')
+  })
+})
+
+describe('Um leiloeiro cria novos lances', () => {
+  test('aceita um lance', async () => {
+    getLeilao.mockResolvedValueOnce(leilao)
+    getLances.mockResolvedValueOnce([])
+    createLance.mockResolvedValueOnce(1)
+    const wrapper = mount(Leiloeiro, {
+      propsData: {
+        id: 1
+      }
+    })
+    await flushPromises()
+    wrapper.find({ ref: 'novoLance' }).vm.$emit('novo-lance', 900)
+    await wrapper.vm.$nextTick()
+    await flushPromises()
+    expect(createLance).toHaveBeenCalled()
   })
 })

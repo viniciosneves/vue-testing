@@ -7,8 +7,8 @@ const leilao = {
   descricao: 'Livro sobre VueJS'
 }
 
-describe('Leilao', () => {
-  test('deveria exibir os dados do leilão no card', () => {
+describe('Um leilão é exibido corretamente', () => {
+  test('exibe os dados do leilão no card', () => {
     const wrapper = mount(Leilao, {
       propsData: {
         leilao

@@ -9,7 +9,7 @@ const $router = {
 }
 
 describe('NovoLeilao', () => {
-  test('deveria criar um novo leilão', async () => {
+  test('cria um novo leilão', async () => {
     createLeilao.mockResolvedValueOnce()
     const wrapper = mount(NovoLeilao, {
       mocks: {

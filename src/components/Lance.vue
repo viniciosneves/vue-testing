@@ -44,10 +44,11 @@ export default {
   },
   methods: {
     darLance () {
-      if (!this.lanceInvalido) {
-        this.$emit('novo-lance', this.valor)
-        this.valor = null
+      if (this.lanceInvalido) {
+        return
       }
+      this.$emit('novo-lance', this.valor)
+      this.valor = null
     }
   }
 }

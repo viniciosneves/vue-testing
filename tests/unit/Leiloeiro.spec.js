@@ -59,7 +59,7 @@ describe('Leiloeiro inicia um leilão que ainda não possui lances', () => {
 })
 
 describe('Um leiloeiro comunica os valores de menor e maior lance', () => {
-  test('informa o menor e maior lance do leilão', async () => {
+  test("Não mostra o aviso de 'Sem lances'", async () => {
     getLeilao.mockResolvedValueOnce(leilao)
     getLances.mockResolvedValueOnce(lances)
     const wrapper = mount(Leiloeiro, {
@@ -69,12 +69,41 @@ describe('Um leiloeiro comunica os valores de menor e maior lance', () => {
     })
     await flushPromises()
     expect(wrapper.find('.alert-dark').exists()).toBe(false)
+  })
+  test('Possui uma lista de lances sendo exibidos', async () => {
+    getLeilao.mockResolvedValueOnce(leilao)
+    getLances.mockResolvedValueOnce(lances)
+    const wrapper = mount(Leiloeiro, {
+      propsData: {
+        id: 1
+      }
+    })
+    await flushPromises()
     expect(wrapper.find('.lances').exists()).toBe(true)
-
-    expect(wrapper.find('.menor-lance').element.textContent)
-      .toContain('Menor lance: R$ 1001')
+  })
+  test('Mostra o maior lance daquele leilão', async () => {
+    getLeilao.mockResolvedValueOnce(leilao)
+    getLances.mockResolvedValueOnce(lances)
+    const wrapper = mount(Leiloeiro, {
+      propsData: {
+        id: 1
+      }
+    })
+    await flushPromises()
     expect(wrapper.find('.maior-lance').element.textContent)
       .toContain('Maior lance: R$ 1099')
+  })
+  test('Mostra o menor lance daquele leilão', async () => {
+    getLeilao.mockResolvedValueOnce(leilao)
+    getLances.mockResolvedValueOnce(lances)
+    const wrapper = mount(Leiloeiro, {
+      propsData: {
+        id: 1
+      }
+    })
+    await flushPromises()
+    expect(wrapper.find('.menor-lance').element.textContent)
+      .toContain('Menor lance: R$ 1001')
   })
 })
 

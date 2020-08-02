@@ -13,12 +13,12 @@
         </div>
       </div>
       <div class="col-6">
-        <button class="btn btn-primary btn-block" type="submiy">Dar lance!</button>
+        <button class="btn btn-primary btn-block" type="submit">Dar lance!</button>
       </div>
       <div class="col-12" v-if="lanceInvalido">
-        <div class="alert alert-danger" role="alert">
+        <p class="alert alert-danger" role="alert">
           O valor mínimo para o lance é de <strong>R$ {{ lanceMinimo }}</strong>
-        </div>
+        </p>
       </div>
     </div>
   </form>
@@ -29,24 +29,26 @@ export default {
   props: {
     lanceMinimo: {
       type: Number,
-      required: true
+      default: 0
+    }
+  },
+  computed: {
+    lanceInvalido () {
+      return this.valor != null && (this.valor < this.lanceMinimo)
     }
   },
   data () {
     return {
-      valor: null,
-      lanceInvalido: false
+      valor: null
     }
   },
   methods: {
     darLance () {
-      if (this.valor < this.lanceMinimo) {
-        this.lanceInvalido = true
-      } else {
-        this.$emit('novo-lance', this.valor)
-        this.valor = null
-        this.lanceInvalido = false
+      if (this.lanceInvalido) {
+        return
       }
+      this.$emit('novo-lance', this.valor)
+      this.valor = null
     }
   }
 }
